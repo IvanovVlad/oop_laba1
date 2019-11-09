@@ -1,0 +1,843 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters.NPC
+{
+    class Enemy:BaseCharacter
+    {
+        public int ExpReward;
+        protected int maxHP;
+
+        public Enemy(int expReward, ClassSpec @class = ClassSpec.WARRIOR, string name = "NoName", int healthPoint = 100, int armour = 0, int attackPower = 0) : base(@class, name, healthPoint, armour, attackPower)
+        {
+            ExpReward = expReward;
+            maxHP = healthPoint;
+        }
+
+        public void Restore()
+        {
+            HealthPoint = maxHP;
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters.NPC
+{
+    class EnemyOrcMage : Enemy
+    {
+        public EnemyOrcMage(int expReward = 10, ClassSpec @class = ClassSpec.MAGE, string name = "OrcsmerMage", 
+            int healthPoint = 25, int armour = 0, int attackPower = 2) 
+            : base(expReward, @class, name, healthPoint, armour, attackPower)
+        {
+            EquipedItems["Spell"] = new Items.Spells.Fireball();
+            attackBehaviour = new CharactersActions.AttackWithSpell();
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters.NPC
+{
+    class EnemyOrcRanger:Enemy
+    {
+        public EnemyOrcRanger(int expReward = 10, ClassSpec @class = ClassSpec.RANGER, string name = "OrcsmerRanger",
+            int healthPoint = 20, int armour = 1, int attackPower = 3)
+            : base(expReward, @class, name, healthPoint, armour, attackPower)
+        {
+            EquipedItems["Weapon"] = new Items.Weapons.SimpleBow();
+            attackBehaviour = new CharactersActions.AttackWithWeapon();
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters.NPC
+{
+    class EnemyOrcWarrior : Enemy
+    {
+        public EnemyOrcWarrior(int expReward = 99, ClassSpec @class = ClassSpec.WARRIOR, string name = "OrcsmerWarrior", 
+            int healthPoint = 30, int armour = 2, int attackPower = 5) 
+            : base(expReward, @class, name, healthPoint, armour, attackPower)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters.NPC
+{
+    class Friend:BaseCharacter
+    {
+        public Quests.QuestBase quest;
+        public Resources.ResourcesBase resources = new Resources.ResourcesBase(999);
+
+        public Friend(ClassSpec @class = ClassSpec.WARRIOR, string name = "NoName", int healthPoint = 100, int armour = 0, 
+            int attackPower = 0) : base(@class, name, healthPoint, armour, attackPower)
+        {
+        }
+
+        public void GiveQuest()
+        {
+            Console.WriteLine(quest.ToString());
+            Characters.Hero.GetInstance(ClassSpec.WARRIOR).QuestList.Add(quest);
+        }
+
+        public void TradeSell(Items.ItemBase ItemToSell)
+        {
+            int tmp = 0;
+            Characters.Hero hero = Characters.Hero.GetInstance(Hero.ClassSpec.WARRIOR);
+            foreach (Items.ItemBase item in resources.ItemList)
+            {
+                if (item == ItemToSell && item.Price <= hero.heroresources.gold)
+                {
+                    hero.heroresources.gold -= item.Price;
+                    hero.heroresources.ItemList.Add(item);
+                    resources.gold += item.Price;
+                    resources.ItemList.Remove(item);
+                    Console.WriteLine($"You have bought '{item.Name}' for {item.Price} gold. Current gold: {hero.heroresources.gold}");
+                    tmp++;
+                    break;
+                }
+                
+            }
+            if (tmp==0) { Console.WriteLine("Something gone wrong. Mb you are cut on money))"); }
+        }
+        public void TradeBuy(Items.ItemBase ItemToBuy)
+        {
+            Characters.Hero hero = Characters.Hero.GetInstance(Hero.ClassSpec.WARRIOR);
+            foreach (Items.ItemBase item in resources.ItemList)
+            {
+                if (item == ItemToBuy && item.Price <= resources.gold)
+                {
+                    hero.heroresources.gold += item.Price;
+                    resources.ItemList.Add(item);
+                    resources.gold -= item.Price;
+                    hero.heroresources.ItemList.Remove(item);
+                    Console.WriteLine($"You have sold '{item.Name}' for {item.Price} gold. Current gold: {hero.heroresources.gold}");
+                    break;
+                }
+                else { Console.WriteLine("Something gone wrong"); }
+            }
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters.NPC
+{
+    class FriendlyArmorer : Friend
+    {
+        public FriendlyArmorer(ClassSpec @class = ClassSpec.WARRIOR, string name = "Armorer", int healthPoint = 100, int armour = 0, int attackPower = 0) 
+            : base(@class, name, healthPoint, armour, attackPower)
+        {
+            attackBehaviour = new CharactersActions.NoAttack();
+            quest = new Quests.AssasinationQuest();
+
+            for (int i = 0; i<=10;i++)
+            {
+                resources.ItemList.Add(new Items.Armours.SteelArmour());
+                resources.ItemList.Add(new Items.Weapons.SimpleBow());
+                resources.ItemList.Add(new Items.Weapons.SteelSword());
+            }
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters.NPC
+{
+    class FriendlyTrader : BaseCharacter
+    {
+        public FriendlyTrader(ClassSpec @class, string name, int healthPoint, int armour, int attackPower) 
+            : base(@class, "GoodsTrader", healthPoint, armour, attackPower)
+        {
+            attackBehaviour = new CharactersActions.NoAttack();
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters
+{
+    abstract class BaseCharacter
+    {
+        public enum ClassSpec
+        {
+            WARRIOR,
+            RANGER,
+            MAGE
+        }
+        public ClassSpec Class;
+
+        public Dictionary<string, Items.ItemBase> EquipedItems = new Dictionary<string, Items.ItemBase>();
+
+        public string Name;
+        public int HealthPoint;
+        public int Armour;
+        public int AttackPower;
+
+        protected CharactersActions.IAttackable attackBehaviour;
+
+        public BaseCharacter(ClassSpec @class = ClassSpec.WARRIOR, string name = "NoName", 
+            int healthPoint = 100, int armour = 0, int attackPower = 0)
+        {
+            EquipedItems.Add("Weapon", new Items.Weapons.SteelSword());
+            EquipedItems.Add("Armour", new Items.Armours.SteelArmour());
+            EquipedItems.Add("Spell", new Items.Spells.Fireball());
+            EquipedItems.Add("Potion", new Items.Potion.HealthPotion());
+
+            Class = @class;
+            Name = name;
+            HealthPoint = healthPoint;
+            Armour = armour;
+            AttackPower = attackPower;
+
+            attackBehaviour = new CharactersActions.BasicAttack();
+        }
+
+        public void setAttackBehaviour(CharactersActions.IAttackable newAttackBehaviour)
+        {
+            attackBehaviour = newAttackBehaviour;
+        }
+
+        public void Attack(BaseCharacter baseCharacter)
+        {
+            attackBehaviour.Attack(this, baseCharacter);
+        }
+
+        public void Display()
+        {
+            Console.WriteLine("This character is <{0} {1}> with <{2} HP>, <{3} Armour>, <{4} AP>", 
+                Name,Class,HealthPoint,Armour,AttackPower);
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Characters
+{
+    //синглтон
+    class Hero:BaseCharacter
+    {
+        public List<Quests.QuestBase> QuestList = new List<Quests.QuestBase>();
+        public int Expirience;
+        public int Level;
+        public int maxHP;
+        public Resources.ResourcesBase heroresources = new Resources.ResourcesBase(100);
+
+        private static Hero instance;
+
+        private Hero(ClassSpec @class, string name, int healthPoint, int armour, int attackPower) 
+            : base(@class, name, healthPoint, armour, attackPower)
+        {
+            //attackBehaviour = new CharactersActions.AttackWithWeapon();
+
+            maxHP = healthPoint;
+            Expirience = 0;
+            Level = 0;
+        }
+
+        public static Hero GetInstance(ClassSpec classSpec)
+        {
+            if (instance == null)
+            {
+                switch (classSpec)
+                {
+                    case ClassSpec.WARRIOR:
+                        instance = new Hero(ClassSpec.WARRIOR, "HeroWarrior", 120, 0, 10);
+                        break;
+                    case ClassSpec.RANGER:
+                        instance = new Hero(ClassSpec.RANGER, "HeroRanger", 100, 2, 5);
+                        break;
+                    case ClassSpec.MAGE:
+                        instance = new Hero(ClassSpec.RANGER, "HeroMage", 80, 1, 2);
+                        break;
+                }
+            }
+            return instance;
+        }
+
+        public void Fight(Characters.NPC.Enemy target)
+        {
+            Console.WriteLine($"{Name} start fight to death with {target.Name}");
+            while (target.HealthPoint > 0)
+            {
+                Attack(target);
+                if (target.HealthPoint > 0)
+                    target.Attack(this);
+                if (GameOver())
+                    break;
+            }
+            if (!GameOver())
+            {
+                foreach (Quests.QuestBase q in QuestList)
+                {
+                    if (q.questType == Quests.QuestBase.QuestType.ASSASINATION)
+                        q.GiveReward();
+                }
+                target.Restore();
+                GetExpirience(target.ExpReward);
+            }
+        }
+
+
+        public void GetExpirience(int exp)
+        {
+            Expirience += exp;
+            CheckLevelUp();
+        }
+
+        public void TakeWeapon()
+        {
+            attackBehaviour = new CharactersActions.AttackWithWeapon();
+        }
+
+        public void ShowAcceptedQuest()
+        {
+            foreach (Quests.QuestBase q in QuestList)
+            {
+                q.ToString();
+            }
+        }
+
+        public void SowEquippedItems()
+        {
+            foreach (string key in EquipedItems.Keys)
+            {
+                Console.WriteLine("    In your {0} slot equipped {1}", 
+                    EquipedItems[key].itemSlot,EquipedItems[key].Name);
+                Console.WriteLine(EquipedItems[key].ToString());
+            }
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{@Class}, {Name}, <hp {HealthPoint}>, <armor {Armour}>, <attackpower {AttackPower}> it");
+            heroresources.ShowResources();
+            SowEquippedItems();
+        }
+
+        public void EquipItem(Items.ItemBase item)
+        {
+            int tmp = 0;
+            foreach (Items.ItemBase i in heroresources.ItemList)
+            {
+                if (i == item)
+                {
+                    Console.WriteLine("you have equiped a {0} in {1} slot", i.Name, i.itemSlot);
+                    attackBehaviour = new CharactersActions.AttackWithWeapon();
+                    heroresources.ItemList.Remove(i);
+                    tmp++;
+                    break;
+                }
+                
+            }
+            if (tmp == 0) { Console.WriteLine("You dont have such an item: {0}", item.Name); }
+        }
+
+        private void CheckLevelUp()
+        {
+            if (Expirience >= 100)
+            {
+                Level = Level++;
+                maxHP += 10;
+                HealthPoint = maxHP;
+                Console.WriteLine("You get level up. HP restored");
+            }
+        }
+
+        private bool GameOver()
+        {
+            if (HealthPoint <= 0)
+            {
+                Console.WriteLine("Your Hero is dead. Game over!");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.CharactersActions
+{
+    class AttackWithSpell:IAttackable
+    {
+        public void Attack(Characters.BaseCharacter Attacker, Characters.BaseCharacter Target)
+        {
+            Target.HealthPoint = Target.HealthPoint - (Attacker.AttackPower * Attacker.EquipedItems["Spell"].AttackBonus - Target.Armour);
+            Console.WriteLine("    {1} cast {0} on {3}. {0} <{2} HP>",
+                Target.Name, Attacker.Name, Target.HealthPoint, Attacker.EquipedItems["Spell"].Name);
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.CharactersActions
+{
+    class AttackWithWeapon:IAttackable
+    {
+
+        public void Attack(Characters.BaseCharacter Attacker, Characters.BaseCharacter Target)
+        {
+            Target.HealthPoint = Target.HealthPoint - (Attacker.AttackPower + Attacker.EquipedItems["Weapon"].AttackBonus - Target.Armour);
+            Console.WriteLine("    {1} attack {0} with {3}. {0} <{2} HP>", 
+                Target.Name, Attacker.Name, Target.HealthPoint, Attacker.EquipedItems["Weapon"].Name);
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.CharactersActions
+{
+    class BasicAttack:IAttackable
+    {
+        public void Attack(Characters.BaseCharacter Attacker, Characters.BaseCharacter Target)
+        {
+            Target.HealthPoint = Target.HealthPoint - (Attacker.AttackPower - Target.Armour);
+            Console.WriteLine("    {1} attack {0} with basicAttack. {0} <{2} HP>"
+                ,Target.Name,Attacker.Name,Target.HealthPoint);
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.CharactersActions
+{
+    interface IAttackable
+    {
+        void Attack(Characters.BaseCharacter Attacker,Characters.BaseCharacter Target);
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.CharactersActions
+{
+    class NoAttack:IAttackable
+    {
+        public void Attack(Characters.BaseCharacter Attacker, Characters.BaseCharacter Target)
+        {
+            Console.WriteLine("This character can not attack");
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Items.Armours
+{
+    class SteelArmour : ItemBase
+    {
+        public SteelArmour(ItemSlot slot = ItemSlot.ARMOUR,string name = "SteelArmour", ItemRarity rarity = ItemRarity.COMMON, 
+            int price = 100, int attackBonus = 0, int armourBonus = 3, int healthBonus = 10) 
+            : base(slot,name, rarity, price, attackBonus, armourBonus, healthBonus)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Items.Potion
+{
+    class HealthPotion : ItemBase
+    {
+        public HealthPotion(Items.ItemSlot slot = ItemSlot.POTION ,string name = "HealthPotion", ItemRarity rarity = ItemRarity.COMMON, 
+            int price = 5, int attackBonus = 0, int armourBonus = 0, int healthBonus = 50) 
+            : base(slot,name, rarity, price, attackBonus, armourBonus, healthBonus)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Items.Spells
+{
+    class Fireball : ItemBase
+    {
+        public Fireball(Items.ItemSlot slot = ItemSlot.SPELL, string name = "Fireball", ItemRarity rarity = ItemRarity.COMMON, 
+            int price = 4, int attackBonus = 6, int armourBonus = 0, int healthBonus = 0) 
+            : base(slot, name, rarity, price, attackBonus, armourBonus, healthBonus)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Items.Weapons
+{
+    class SimpleBow : ItemBase
+    {
+        public SimpleBow(Items.ItemSlot slot = ItemSlot.WEAPON, string name = "SimpleBow", ItemRarity rarity = ItemRarity.COMMON, int price = 5, int attackBonus = 3, 
+            int armourBonus = 0, int healthBonus = 0) : base(slot,name, rarity, price, attackBonus, armourBonus, healthBonus)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Items.Weapons
+{
+    class SteelSword : ItemBase
+    {
+        public SteelSword(Items.ItemSlot slot = ItemSlot.WEAPON, string name = "SteelSword", ItemRarity rarity = ItemRarity.COMMON, int price = 10, 
+            int attackBonus = 3, int armourBonus = 0, int healthBonus = 0) 
+            : base(slot, name, rarity, price, attackBonus, armourBonus, healthBonus)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Items
+{
+    public enum ItemSlot
+        {
+            ARMOUR,
+            WEAPON,
+            SPELL,
+            POTION
+        }
+
+    class ItemBase
+    {
+        public enum ItemRarity
+        {COMMON,
+        RARE,
+        EPIC}
+
+        public ItemRarity Rarity;
+        public ItemSlot itemSlot;
+        public string Name;
+        public int Price;
+
+        public int AttackBonus;
+        public int ArmourBonus;
+        public int HealthBonus;
+
+        public ItemBase(ItemSlot slot, string name = "NoName", ItemRarity rarity = ItemRarity.COMMON, int price = 0,
+            int attackBonus = 0, int armourBonus = 0, int healthBonus = 0)
+        {
+            itemSlot = slot;
+            Name = name;
+            Rarity = rarity;
+            Price = price;
+            AttackBonus = attackBonus;
+            ArmourBonus = armourBonus;
+            HealthBonus = healthBonus;
+        }
+        public override string ToString()
+        {
+            return $"{Name} {Rarity}, cost {Price} gold \nstats: <{AttackBonus} attackb> <{HealthBonus} hb> <{ArmourBonus} armourb>";
+        }
+
+        public static bool operator ==(ItemBase item1, ItemBase item2)
+        {
+            return item1.Equals(item2);
+        }
+
+        public static bool operator !=(ItemBase item1, ItemBase item2)
+        {
+            return !item1.Equals(item2);
+        }
+
+        public bool Equals(ItemBase item)
+        {
+            if (Name == item.Name && Rarity == item.Rarity && Price == item.Price)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Price.GetHashCode();
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Quests
+{
+    class AssasinationQuest : QuestBase
+    {
+        public AssasinationQuest(QuestType qType = QuestType.ASSASINATION, string name = "Orc assasination", 
+            string text = "Hello! Go kill any type of Enemy, I will pay", int goldReward = 10, int expReward = 10) 
+            : base(qType, name, text, goldReward, expReward)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Quests
+{
+    class QuestBase
+    {
+        public enum QuestType
+        {
+            ASSASINATION,
+            TRADE
+        }
+        public QuestType questType;
+        public string Name;
+        public string Text;
+        public int GoldReward;
+        public int ExpReward;
+
+        public QuestBase(QuestType qType, string name = "NoName", string text = "Text", int goldReward = 0, int expReward = 0)
+        {
+            questType = qType;
+            Name = name;
+            Text = text;
+            GoldReward = goldReward;
+            ExpReward = expReward;
+        }
+
+        public void GiveReward()
+        {
+            Characters.Hero.GetInstance(Characters.BaseCharacter.ClassSpec.WARRIOR).heroresources.gold += GoldReward;
+            Characters.Hero.GetInstance(Characters.BaseCharacter.ClassSpec.WARRIOR).Expirience += GoldReward;
+            Console.WriteLine($"Quest name '{Name}' completed. \nRewards: exp {ExpReward}, gold {GoldReward}");
+        }
+
+        public override string ToString()
+        {
+            return $"Quest name '{Name}'.\n{Text} \nRewards: exp {ExpReward}, gold {GoldReward}";
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso.Quests
+{
+    class TradeQuest : QuestBase
+    {
+        public TradeQuest(QuestType qType = QuestType.TRADE, string name = "Trade",
+            string text = "Hello! Sell me some thing", int goldReward = 10, int expReward = 10)
+            : base(qType, name, text, goldReward, expReward)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using RPGGamewithpatternsandso.Items;
+
+namespace RPGGamewithpatternsandso.Resources
+{
+    class ResourcesBase
+    {
+        public int gold;
+        public List<Items.ItemBase> ItemList = new List<Items.ItemBase>();
+
+        public ResourcesBase(int gold)
+        {
+            this.gold = gold;
+            ItemList.Add(new Items.Potion.HealthPotion());
+        }
+
+        public void ShowResources()
+        {
+            Console.WriteLine("You have {0} gold. Items in your stash:", gold);
+            foreach (Items.ItemBase item in ItemList)
+            {
+                Console.WriteLine("    "+item.ToString());
+            }
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RPGGamewithpatternsandso
+{
+    class GameFacade
+    {
+        //типа комплексные бои прописать
+        private Characters.Hero _hero;
+        public Characters.NPC.EnemyOrcWarrior OrcWarrior = new Characters.NPC.EnemyOrcWarrior();
+        public Characters.NPC.EnemyOrcRanger OrcRanger = new Characters.NPC.EnemyOrcRanger();
+        public Characters.NPC.EnemyOrcMage OrcMage = new Characters.NPC.EnemyOrcMage();
+        public Characters.NPC.FriendlyArmorer Armorer = new Characters.NPC.FriendlyArmorer();
+        public Items.Armours.SteelArmour SteelArmour = new Items.Armours.SteelArmour();
+        public Items.Weapons.SteelSword SteelSword = new Items.Weapons.SteelSword();
+
+        public GameFacade(Characters.Hero hero)
+        {
+            Console.WriteLine($"Game is started you are <{hero.Name}>");
+            _hero = hero;
+        }
+
+        public void FightEnemy(Characters.NPC.Enemy enemy)
+        {
+            _hero.Fight(enemy);
+        }
+
+        public void ShowHeroInfo()
+        {
+            _hero.ShowInfo();
+        }
+
+        public void TradeBuy(Characters.NPC.Friend Trader, Items.ItemBase item)
+        {
+            Trader.TradeSell(item);
+        }
+        public void TradeSell(Characters.NPC.Friend Trader, Items.ItemBase item)
+        {
+            Trader.TradeBuy(item);
+        }
+
+        public void GetQuestFromNPC(Characters.NPC.Friend friend)
+        {
+            friend.GiveQuest();
+        }
+
+        public void Scenario1()
+        {
+            Console.WriteLine("You are in the Armorer Shop");
+            Armorer.TradeSell(SteelSword);
+            Armorer.TradeSell(SteelArmour);
+            _hero.EquipItem(SteelSword);
+            _hero.EquipItem(SteelArmour);
+            Console.WriteLine("--------------------");
+            ShowHeroInfo();
+            Console.WriteLine("--------------------");
+            GetQuestFromNPC(Armorer);
+            Console.WriteLine("--------------------");
+            FightEnemy(OrcWarrior);
+            
+        }
+    }
+}
+------------------------------------------------------------------------﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+//система персонажей реализует шаблон пр-я "стратегия" -- паттерн поведения
+//гг "синглтон" -- порождающий паттерн
+//фасад -- структурный паттерн
+
+namespace RPGGamewithpatternsandso
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var Hero = Characters.Hero.GetInstance(Characters.BaseCharacter.ClassSpec.WARRIOR);
+
+            GameFacade game = new GameFacade(Hero);
+
+            game.Scenario1();
+            //game.FightEnemy(game.OrcWarrior);
+            //game.TradeBuy(game.Armorer, new Items.Weapons.SteelSword());
+            //game.ShowHeroInfo();
+            Console.ReadKey();
+        }
+    }
+}

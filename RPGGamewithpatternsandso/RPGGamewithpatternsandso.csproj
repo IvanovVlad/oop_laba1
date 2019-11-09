@@ -68,10 +68,12 @@
     <Compile Include="Items\Spells\Fireball.cs" />
     <Compile Include="Quests\AssasinationQuest.cs" />
     <Compile Include="Quests\QuestBase.cs" />
+    <Compile Include="Quests\TradeQuest.cs" />
     <Compile Include="Resources\ResoursecBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

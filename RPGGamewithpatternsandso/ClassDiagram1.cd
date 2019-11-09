@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RPGGamewithpatternsandso.Characters.BaseCharacter" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAKoACQQAAIEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\BaseCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.Hero" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAgAAEAAAIAAAABAAAAAAEBBBAAAABIAAAAAIABAQ=</HashCode>
+      <FileName>Characters\Hero.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.NPC.Enemy" Collapsed="true">
+    <Position X="12" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAABgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\NPC\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.NPC.EnemyOrcMage" Collapsed="true">
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\NPC\EnemyOrcMage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.NPC.EnemyOrcRanger" Collapsed="true">
+    <Position X="12" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\NPC\EnemyOrcRanger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.NPC.EnemyOrcWarrior" Collapsed="true">
+    <Position X="14.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\NPC\EnemyOrcWarrior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.NPC.Friend" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAACAAAAIAAAABAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Characters\NPC\Friend.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.NPC.FriendlyArmorer" Collapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\NPC\FriendlyArmorer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Characters.NPC.FriendlyTrader" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Characters\NPC\FriendlyTrader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.CharactersActions.AttackWithSpell" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CharactersActions\AttackWithSpell.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.CharactersActions.AttackWithWeapon" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CharactersActions\AttackWithWeapon.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.CharactersActions.BasicAttack" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CharactersActions\BasicAttack.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.CharactersActions.NoAttack" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CharactersActions\NoAttack.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.GameFacade" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAgAAAIAQAAAAQAAQAAAAAAEBwBAAAY=</HashCode>
+      <FileName>GameFacade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Program" Collapsed="true">
+    <Position X="20.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Items.Armours.SteelArmour" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\Armours\SteelArmour.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Items.ItemBase" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAABAQAAAAAEgAAAAAQAAAAQQIBAAAAAAAAAAiA=</HashCode>
+      <FileName>Items\ItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Items.Potion.HealthPotion" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\Potion\HealthPotion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Items.Spells.Fireball" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\Spells\Fireball.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Items.Weapons.SimpleBow" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\Weapons\SimpleBow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Items.Weapons.SteelSword" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\Weapons\SteelSword.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Quests.AssasinationQuest" Collapsed="true">
+    <Position X="4.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Quests\AssasinationQuest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Quests.QuestBase" Collapsed="true">
+    <Position X="3.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAEAASAAAgEAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Quests\QuestBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Quests.TradeQuest" Collapsed="true">
+    <Position X="2.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Quests\TradeQuest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGGamewithpatternsandso.Resources.ResourcesBase" Collapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAgAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Resources\ResoursecBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="RPGGamewithpatternsandso.CharactersActions.IAttackable" Collapsed="true">
+    <Position X="16.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CharactersActions\IAttackable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="RPGGamewithpatternsandso.Items.ItemSlot" Collapsed="true">
+    <Position X="16.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACIAAAAIAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Items\ItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
