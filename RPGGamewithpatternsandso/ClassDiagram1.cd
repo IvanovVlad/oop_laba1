@@ -118,6 +118,13 @@
   </Class>
   <Class Name="RPGGamewithpatternsandso.Items.ItemBase" Collapsed="true">
     <Position X="7.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="RPGGamewithpatternsandso.Items.ItemBase.ItemRarity" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Items\ItemBase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AEAAAAABAQAAAAAEgAAAAAQAAAAQQIBAAAAAAAAAAiA=</HashCode>
       <FileName>Items\ItemBase.cs</FileName>

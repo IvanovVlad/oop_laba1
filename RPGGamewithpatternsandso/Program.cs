@@ -19,9 +19,9 @@ namespace RPGGamewithpatternsandso
             GameFacade game = new GameFacade(Hero);
 
             game.Scenario1();
-            //game.FightEnemy(game.OrcWarrior);
-            //game.TradeBuy(game.Armorer, new Items.Weapons.SteelSword());
-            //game.ShowHeroInfo();
+            game.FightEnemy(game.OrcWarrior);
+            game.TradeBuy(game.Armorer, new Items.Weapons.SteelSword());
+            game.ShowHeroInfo();
             Console.ReadKey();
         }
     }
